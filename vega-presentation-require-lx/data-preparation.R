@@ -15,7 +15,7 @@ rose_data <- rose_data %>%
   pivot_longer(-c(Month, Year), names_to = "cause", values_to = "n_deaths")
 rose_data
 
-# write_csv(rose_data, here("data", "rose_data"))
+# write_csv(rose_data, here("data", "rose_data.csv"))
 
 names_m <-
   readr::read_csv("./raw-data/nomesmasculino.csv", locale = locale(encoding = "latin1"))
@@ -33,7 +33,7 @@ names_f
 names <- bind_rows(names_f, names_m)
 names
 
-# write_csv(names, here("data", "names"))
+# write_csv(names, here("data", "names.csv"))
 
 operations <-
   read_excel("./raw-data/abril2020-lisbonmunicipality-alloperations-value.xlsx",
@@ -58,4 +58,4 @@ operations <- operations %>% add_column(
 ) %>% rename_all(tolower)
 operations
 
-# write_csv(operations, here("data", "operations"))
+# write_csv(operations, here("data", "operations.csv"))
