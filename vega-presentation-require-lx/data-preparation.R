@@ -15,8 +15,11 @@ ordering_seq <- function(start, end) {
 rose_data <- as_tibble(Nightingale)
 rose_data
 
+rose_data <- rose_data %>% mutate(max = pmax(Disease, Wounds, Other, na.rm = FALSE))
+rose_data
+
 rose_data <-
-  rose_data %>% select(Date, Month, Year, Disease, Wounds, Other) %>% rename_all(tolower)
+  rose_data %>% select(Date, Month, Year, Disease, Wounds, Other, max) %>% rename_all(tolower)
 rose_data
 
 rose_data <- rose_data %>% mutate(chart = ifelse(date %in% seq(ymd('1854-04-01'), ymd('1855-03-01'), '1 month'), 1, 2))
@@ -29,7 +32,7 @@ rose_data <- rose_data %>% arrange(date) %>% group_by(chart) %>% mutate(order=fi
 rose_data
 
 rose_data <- rose_data %>%
-  pivot_longer(-c(date, month, year, chart, order), names_to = "cause", values_to = "n_deaths")
+  pivot_longer(-c(date, month, year, chart, order, max), names_to = "cause", values_to = "n_deaths")
 rose_data
 
 # write_csv(rose_data, here::here("data", "rose_data.csv"))
