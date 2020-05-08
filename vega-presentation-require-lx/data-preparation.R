@@ -24,9 +24,11 @@ rose_data <-
 rose_data
 
 rose_data <-
-  rose_data %>% mutate(chart = ifelse(date %in% seq(
-    ymd('1854-04-01'), ymd('1855-03-01'), '1 month'
-  ), "1. APRIL 1854 to MARCH 1855", "2. APRIL 1855 to MARCH 1856"))
+  rose_data %>% mutate(chart = ifelse(
+    date %in% seq(ymd('1854-04-01'), ymd('1855-03-01'), '1 month'),
+    "1. APRIL 1854 to MARCH 1855",
+    "2. APRIL 1855 to MARCH 1856"
+  ))
 rose_data
 
 first_seq <- ordering_seq(10, 12)
@@ -62,6 +64,11 @@ names_f <-
 names_f
 
 names <- bind_rows(names_f, names_m)
+names
+
+names <- names %>%
+  group_by(gender) %>%
+  top_n(n = 10, wt = total)
 names
 
 # write_csv(names, here::here("data", "names.csv"))
