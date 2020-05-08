@@ -4,6 +4,7 @@ library(HistData)
 library(readxl)
 library(emo)
 library(lubridate)
+library(jsonlite)
 
 ordering_seq <- function(start, end) {
   second_part <- seq(1, start-1)
@@ -32,6 +33,7 @@ rose_data <- rose_data %>%
 rose_data
 
 # write_csv(rose_data, here::here("data", "rose_data.csv"))
+# write(toJSON(rose_data), here::here("data", "rose_data.json"))
 
 names_m <-
   readr::read_csv("./raw-data/nomesmasculino.csv", locale = locale(encoding = "latin1"))
