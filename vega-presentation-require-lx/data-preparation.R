@@ -26,7 +26,7 @@ rose_data
 rose_data <-
   rose_data %>% mutate(chart = ifelse(date %in% seq(
     ymd('1854-04-01'), ymd('1855-03-01'), '1 month'
-  ), 1, 2))
+  ), "1. APRIL 1854 to MARCH 1855", "2. APRIL 1855 to MARCH 1856"))
 rose_data
 
 first_seq <- ordering_seq(10, 12)
