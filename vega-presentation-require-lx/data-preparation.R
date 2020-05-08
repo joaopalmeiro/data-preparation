@@ -3,19 +3,35 @@ library(here)
 library(HistData)
 library(readxl)
 library(emo)
+library(lubridate)
+
+ordering_seq <- function(start, end) {
+  second_part <- seq(1, start-1)
+  first_part <- seq(start, end)
+  return(c(first_part, second_part))
+}
 
 rose_data <- as_tibble(Nightingale)
 rose_data
 
 rose_data <-
-  rose_data %>% select(Month, Year, Disease, Wounds, Other)
+  rose_data %>% select(Date, Month, Year, Disease, Wounds, Other) %>% rename_all(tolower)
+rose_data
+
+rose_data <- rose_data %>% mutate(chart = ifelse(date %in% seq(ymd('1854-04-01'), ymd('1855-03-01'), '1 month'), 1, 2))
+rose_data
+
+first_seq <- ordering_seq(10, 12)
+first_seq
+
+rose_data <- rose_data %>% arrange(date) %>% group_by(chart) %>% mutate(order=first_seq)
 rose_data
 
 rose_data <- rose_data %>%
-  pivot_longer(-c(Month, Year), names_to = "cause", values_to = "n_deaths")  %>% rename_all(tolower)
+  pivot_longer(-c(date, month, year, chart, order), names_to = "cause", values_to = "n_deaths")
 rose_data
 
-# write_csv(rose_data, here("data", "rose_data.csv"))
+# write_csv(rose_data, here::here("data", "rose_data.csv"))
 
 names_m <-
   readr::read_csv("./raw-data/nomesmasculino.csv", locale = locale(encoding = "latin1"))
@@ -33,7 +49,7 @@ names_f
 names <- bind_rows(names_f, names_m)
 names
 
-# write_csv(names, here("data", "names.csv"))
+# write_csv(names, here::here("data", "names.csv"))
 
 operations <-
   read_excel("./raw-data/abril2020-lisbonmunicipality-alloperations-value.xlsx",
@@ -58,4 +74,4 @@ operations <- operations %>% add_column(
 ) %>% rename_all(tolower)
 operations
 
-# write_csv(operations, here("data", "operations.csv"))
+# write_csv(operations, here::here("data", "operations.csv"))
