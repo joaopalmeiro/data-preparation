@@ -7,7 +7,7 @@ library(lubridate)
 library(jsonlite)
 
 ordering_seq <- function(start, end) {
-  second_part <- seq(1, start-1)
+  second_part <- seq(1, start - 1)
   first_part <- seq(start, end)
   return(c(first_part, second_part))
 }
@@ -15,24 +15,31 @@ ordering_seq <- function(start, end) {
 rose_data <- as_tibble(Nightingale)
 rose_data
 
-rose_data <- rose_data %>% mutate(max = pmax(Disease, Wounds, Other, na.rm = FALSE))
+rose_data <-
+  rose_data %>% mutate(max = pmax(Disease, Wounds, Other, na.rm = FALSE))
 rose_data
 
 rose_data <-
   rose_data %>% select(Date, Month, Year, Disease, Wounds, Other, max) %>% rename_all(tolower)
 rose_data
 
-rose_data <- rose_data %>% mutate(chart = ifelse(date %in% seq(ymd('1854-04-01'), ymd('1855-03-01'), '1 month'), 1, 2))
+rose_data <-
+  rose_data %>% mutate(chart = ifelse(date %in% seq(
+    ymd('1854-04-01'), ymd('1855-03-01'), '1 month'
+  ), 1, 2))
 rose_data
 
 first_seq <- ordering_seq(10, 12)
 first_seq
 
-rose_data <- rose_data %>% arrange(date) %>% group_by(chart) %>% mutate(order=first_seq)
+rose_data <-
+  rose_data %>% arrange(date) %>% group_by(chart) %>% mutate(order = first_seq)
 rose_data
 
 rose_data <- rose_data %>%
-  pivot_longer(-c(date, month, year, chart, order, max), names_to = "cause", values_to = "n_deaths")
+  pivot_longer(-c(date, month, year, chart, order, max),
+               names_to = "cause",
+               values_to = "n_deaths")
 rose_data
 
 # write_csv(rose_data, here::here("data", "rose_data.csv"))
@@ -65,16 +72,16 @@ operations
 
 operations <- operations %>% add_column(
   emoji = c(
-    emo::ji_find("shopping")[[2,2]],
-    emo::ji_find("building")[[1,2]],
-    emo::ji_find("box")[[5,2]],
+    emo::ji_find("shopping")[[2, 2]],
+    emo::ji_find("building")[[1, 2]],
+    emo::ji_find("box")[[5, 2]],
     emo::ji("pill"),
-    emo::ji_find("phone")[[4,2]],
-    emo::ji_find("location")[[1,2]],
-    emo::ji_find("shopping")[[1,2]],
-    emo::ji_find("computer")[[1,2]],
-    emo::ji_find("hospital")[[1,2]],
-    emo::ji_find("box")[[1,2]]
+    emo::ji_find("phone")[[4, 2]],
+    emo::ji_find("location")[[1, 2]],
+    emo::ji_find("shopping")[[1, 2]],
+    emo::ji_find("computer")[[1, 2]],
+    emo::ji_find("hospital")[[1, 2]],
+    emo::ji_find("box")[[1, 2]]
   )
 ) %>% rename_all(tolower)
 operations
