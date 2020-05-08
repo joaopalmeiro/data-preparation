@@ -42,6 +42,9 @@ rose_data <- rose_data %>%
                values_to = "n_deaths")
 rose_data
 
+rose_data <- rose_data  %>% arrange(chart, order)
+rose_data
+
 # write_csv(rose_data, here::here("data", "rose_data.csv"))
 # write(toJSON(rose_data), here::here("data", "rose_data.json"))
 
