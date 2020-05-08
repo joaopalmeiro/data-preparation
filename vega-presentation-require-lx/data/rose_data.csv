@@ -1,4 +1,4 @@
-Month,Year,cause,n_deaths
+month,year,cause,n_deaths
 Apr,1854,Disease,1
 Apr,1854,Wounds,0
 Apr,1854,Other,5

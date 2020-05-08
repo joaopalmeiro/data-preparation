@@ -12,7 +12,7 @@ rose_data <-
 rose_data
 
 rose_data <- rose_data %>%
-  pivot_longer(-c(Month, Year), names_to = "cause", values_to = "n_deaths")
+  pivot_longer(-c(Month, Year), names_to = "cause", values_to = "n_deaths")  %>% rename_all(tolower)
 rose_data
 
 # write_csv(rose_data, here("data", "rose_data.csv"))
